@@ -6,7 +6,7 @@ import ProductList from "./ProductList.mjs";
 document.addEventListener("DOMContentLoaded", async () => {
   const listElement = document.querySelector(".product-list");
 
-  const dataSource = new ProductData("../json/tents.json");
+  const dataSource = new ProductData("./public/json/tents.json");
   const productList = new ProductList("tents", dataSource, listElement);
   await productList.init();
 });
