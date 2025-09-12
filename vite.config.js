@@ -2,9 +2,10 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: "src/",
+  root: "src",       // pasta de origem dos arquivos
+  base: "./",        // caminhos relativos
   build: {
-    outDir: "../dist",
+    outDir: "../docs",  // gera a pasta docs pronta para GitHub Pages
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.html"),
@@ -15,3 +16,4 @@ export default defineConfig({
     },
   },
 });
+
