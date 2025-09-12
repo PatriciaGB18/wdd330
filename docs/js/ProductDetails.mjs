@@ -19,9 +19,10 @@ export default class ProductDetails {
   }
 
   renderProductDetails() {
-    document.getElementById("product-name").textContent = this.product.name;
-    document.getElementById("product-brand").textContent = this.product.brand;
+    document.getElementById("product-name").textContent = this.product.Name;
+    document.getElementById("product-brand").textContent = this.product.Brand?.Name || "";
     document.getElementById("product-price").textContent = `$${this.product.FinalPrice}`;
+
 
     // Se houver desconto
     if (this.product.FinalPrice < this.product.SuggestedRetailPrice) {
