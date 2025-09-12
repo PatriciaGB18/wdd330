@@ -88,7 +88,7 @@
     "Id": "880RT",
     "NameWithoutBrand": "Ajax Tent - 2-Person, 3-Season",
     "Name": "Marmot Ajax Tent - 2-Person, 3-Season",
-    "Image": "/images/tents/marmot-ajax-tent-2-person-3-season-in-pale-pumpkin-terracotta~p~880rt_01~320.jpg",
+    "Image": "public/images/tents/cedar-ridge-rimrock-tent-2-person-3-season-in-rust-clay~p~344yj_01~320.jpg",
     "SizesAvailable": {},
     "Colors": [
       {
@@ -110,7 +110,7 @@
     "NameWithoutBrand": "Rimrock Tent - 2-Person, 3-Season",
     "Name": "Cedar Ridge Rimrock Tent - 2-Person, 3-Season",
     "IsFamousBrand": false,
-    "Image": "/images/tents/cedar-ridge-rimrock-tent-2-person-3-season-in-rust-clay~p~344yj_01~320.jpg",
+    "Image": "public/images/tents/cedar-ridge-rimrock-tent-2-person-3-season-in-rust-clay~p~344yj_01~320.jpg",
     "SizesAvailable": {},
     "Colors": [
       {
