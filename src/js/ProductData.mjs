@@ -1,6 +1,6 @@
 // src/js/ProductData.mjs
 export default class ProductData {
-  constructor(jsonPath = "/json/tents.json") {
+  constructor(jsonPath = "../public/json/tents.json") {
     this.jsonPath = jsonPath;
   }
 
