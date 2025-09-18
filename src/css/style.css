@@ -261,3 +261,67 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+/* Custom Alert Modal */
+.custom-alert {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6); /* Dark overlay */
+}
+
+.custom-alert-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
+  max-width: 80%;
+  text-align: center;
+  margin: 15% auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.custom-alert-content h2 {
+  margin: 0 0 10px;
+}
+
+.custom-alert-content p {
+  margin: 0 0 20px;
+}
+
+.custom-alert-content button {
+  padding: 10px 20px;
+  border: none;
+  background: #2a9d8f;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.custom-alert-content button:hover {
+  background: #21867a;
+}
+
+.close-btn {
+  float: right;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+
+.alert-list p {
+  text-align: center;
+  font-weight: bold;
+}
