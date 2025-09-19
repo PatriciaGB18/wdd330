@@ -22,6 +22,20 @@ if (search) {
     // Caso contrário, passa a categoria
     productList = new ProductList(category || 'tents', dataSource, listElement);
 }
+const searchForm = document.getElementById("search-form");
+
+if (searchForm) {
+    searchForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // evita o reload da página
+
+        const query = document.getElementById("search-input").value.trim();
+
+        if (query) {
+            // redireciona para a página de listagem de produtos passando o termo de busca como parâmetro
+            window.location.href = `product_listing/index.html?search=${encodeURIComponent(query)}`;
+        }
+    });
+}
 
 // Inicializa a lista
 productList.init();

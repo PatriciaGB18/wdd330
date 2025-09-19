@@ -33,4 +33,5 @@ export default class ProductData {
     const data = await convertToJson(response);
     return data.Result;
   }
+
 }
