@@ -1,4 +1,3 @@
-// src/js/ProductData.mjs
 const baseURL = import.meta.env.VITE_SERVER_URL;
 
 function convertToJson(res) {
@@ -11,18 +10,27 @@ function convertToJson(res) {
 
 export default class ProductData {
   constructor() {
-    
+    // categoria e path não são mais necessários
   }
 
+  // busca por categoria
   async getData(category) {
     const response = await fetch(`${baseURL}products/search/${category}`);
     const data = await convertToJson(response);
-    return data.Result; 
+    return data.Result;
   }
 
+  // busca por id
   async findProductById(id) {
     const response = await fetch(`${baseURL}product/${id}`);
     const data = await convertToJson(response);
-    return data.Result; 
+    return data.Result;
+  }
+
+  // novo método: busca por termo
+  async searchProducts(term) {
+    const response = await fetch(`${baseURL}products/search/${term}`);
+    const data = await convertToJson(response);
+    return data.Result;
   }
 }

@@ -1,11 +1,10 @@
 // src/js/ProductList.mjs
 import { renderListWithTemplate } from "./utils.mjs";
 
-
 function productCardTemplate(product) {
   return `
     <li class="product-card">
-      <a href="/product_pages/?product=${product.Id}">
+      <a href="/product_pages/index.html?product=${product.Id}">
         <img src="${product.Images.PrimaryMedium}" alt="${product.NameWithoutBrand}">
         <h3>${product.Brand.Name}</h3>
         <p>${product.NameWithoutBrand}</p>
@@ -31,14 +30,14 @@ export default class ProductList {
         return;
       }
 
-      
+      // Renderiza os produtos
       renderListWithTemplate(productCardTemplate, this.listElement, list);
 
-      
-      const titleElement = document.querySelector(".page-title");
+      // Atualiza o título da categoria, se existir
+      const titleElement = document.querySelector(".title");
       if (titleElement) {
         const formattedCategory = this.category.replace("-", " ");
-        titleElement.textContent = `Top Products: ${formattedCategory}`;
+        titleElement.textContent = formattedCategory;
       }
 
     } catch (error) {

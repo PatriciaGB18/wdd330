@@ -1,4 +1,3 @@
-// src/js/ProductDetails.js
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
@@ -9,7 +8,7 @@ export default class ProductDetails {
   }
 
   async init() {
-    
+    // pega os detalhes do produto usando a API
     this.product = await this.dataSource.findProductById(this.productId);
 
     if (!this.product) {
@@ -17,10 +16,10 @@ export default class ProductDetails {
       return;
     }
 
-    
+    // renderiza os detalhes do produto
     this.renderProductDetails();
 
-    
+    // adiciona listener para o botão "Add to Cart"
     const addBtn = document.getElementById("add-to-cart");
     if (addBtn) {
       addBtn.addEventListener("click", this.addProductToCart.bind(this));
@@ -31,7 +30,6 @@ export default class ProductDetails {
     const cartItems = getLocalStorage("so-cart") || [];
     cartItems.push(this.product);
     setLocalStorage("so-cart", cartItems);
-    alert(`${this.product.NameWithoutBrand} added to cart!`);
   }
 
   renderProductDetails() {
@@ -54,7 +52,7 @@ export default class ProductDetails {
     document.querySelector("#p-color").textContent = product.Colors[0].ColorName;
     document.querySelector("#p-description").innerHTML = product.DescriptionHtmlSimple;
 
-    
+    // define o data-id do botão
     document.querySelector("#add-to-cart").dataset.id = product.Id;
   }
 }
