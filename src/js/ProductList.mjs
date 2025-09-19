@@ -1,4 +1,19 @@
-import { renderListWithTemplate } from './utils.mjs';
+// src/js/ProductList.mjs
+import { renderListWithTemplate } from "./utils.mjs";
+
+
+function productCardTemplate(product) {
+  return `
+    <li class="product-card">
+      <a href="/product_pages/?product=${product.Id}">
+        <img src="${product.Images.PrimaryMedium}" alt="${product.NameWithoutBrand}">
+        <h3>${product.Brand.Name}</h3>
+        <p>${product.NameWithoutBrand}</p>
+        <p class="product-card__price">$${product.FinalPrice.toFixed(2)}</p>
+      </a>
+    </li>
+  `;
+}
 
 export default class ProductList {
   constructor(category, dataSource, listElement) {
@@ -8,34 +23,27 @@ export default class ProductList {
   }
 
   async init() {
-    const list = await this.dataSource.getData();
-    this.renderList(list);
-  }
+    try {
+      const list = await this.dataSource.getData(this.category);
 
-  renderList(list, position = "afterbegin", clear = false) {
-    renderListWithTemplate(productCardTemplate, this.listElement, list, position, clear);
+      if (!list || list.length === 0) {
+        this.listElement.innerHTML = "<p>No products found.</p>";
+        return;
+      }
+
+      
+      renderListWithTemplate(productCardTemplate, this.listElement, list);
+
+      
+      const titleElement = document.querySelector(".page-title");
+      if (titleElement) {
+        const formattedCategory = this.category.replace("-", " ");
+        titleElement.textContent = `Top Products: ${formattedCategory}`;
+      }
+
+    } catch (error) {
+      console.error("Error loading products:", error);
+      this.listElement.innerHTML = "<p>Failed to load products.</p>";
+    }
   }
 }
-
-function productCardTemplate(product) {
-  const isDiscounted = product.FinalPrice < product.SuggestedRetailPrice;
-  const discountPercent = Math.round(
-    ((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100
-  );
-
-  return `
-  <li class="product-card">
-    <a href="product_pages/?product=${product.Id}">
-      <img src="${product.Image}" alt="Image of ${product.Name}">
-      <h2 class="card__brand">${product.Brand.Name}</h2>
-      <h3 class="card__name">${product.NameWithoutBrand}</h3>
-      <p class="product-card__price">
-        $${product.FinalPrice}
-        ${isDiscounted ? `<span class="product-card__discount">-${discountPercent}%</span>` : ''}
-      </p>
-    </a>
-  </li>
-  `;
-}
-
-
