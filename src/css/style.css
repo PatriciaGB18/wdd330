@@ -325,3 +325,30 @@ footer {
   text-align: center;
   font-weight: bold;
 }
+
+/* ---------------- DISCOUNT STYLES ---------------- */
+.original-price {
+  text-decoration: line-through;
+  color: var(--light-grey);
+  margin-right: 8px;
+  font-size: 0.9em;
+}
+
+.discounted-price {
+  font-weight: bold;
+  color: var(--tertiary-color);
+  font-size: 1.2em;
+}
+
+.discount-badge {
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  font-weight: bold;
+  display: inline-block;
+}
+
