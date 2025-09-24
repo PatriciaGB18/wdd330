@@ -1,42 +1,58 @@
-import { setLocalStorage } from "./utils.mjs";
-import ProductData from "./ProductData.mjs";
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
     this.productId = productId;
-    this.dataSource = dataSource;
     this.product = {};
+    this.dataSource = dataSource;
   }
 
   async init() {
-    // Buscar detalhes do produto
+    // pega os detalhes do produto usando a API
     this.product = await this.dataSource.findProductById(this.productId);
+
+    if (!this.product) {
+      document.querySelector(".product-detail").innerHTML = "<p>Product not found.</p>";
+      return;
+    }
+
+    // renderiza os detalhes do produto
     this.renderProductDetails();
 
-    // Adicionar listener do botão Add to Cart
-    document.getElementById("addToCart")
-      .addEventListener("click", this.addProductToCart.bind(this));
-  }
-
-  renderProductDetails() {
-    document.getElementById("product-name").textContent = this.product.Name;
-    document.getElementById("product-brand").textContent = this.product.Brand?.Name || "";
-    document.getElementById("product-price").textContent = `$${this.product.FinalPrice}`;
-
-
-    // Se houver desconto
-    if (this.product.FinalPrice < this.product.SuggestedRetailPrice) {
-      const discountPercent = Math.round(
-        ((this.product.SuggestedRetailPrice - this.product.FinalPrice) / this.product.SuggestedRetailPrice) * 100
-      );
-      document.getElementById("product-discount").textContent = `-${discountPercent}%`;
+    // adiciona listener para o botão "Add to Cart"
+    const addBtn = document.getElementById("add-to-cart");
+    if (addBtn) {
+      addBtn.addEventListener("click", this.addProductToCart.bind(this));
     }
   }
 
   addProductToCart() {
-    const cart = JSON.parse(localStorage.getItem("so-cart")) || [];
-    cart.push(this.product);
-    setLocalStorage("so-cart", cart);
-    alert(`${this.product.name} added to cart!`);
+    const cartItems = getLocalStorage("so-cart") || [];
+    cartItems.push(this.product);
+    setLocalStorage("so-cart", cartItems);
+  }
+
+  renderProductDetails() {
+    const product = this.product;
+
+    document.querySelector("h2").textContent = product.Category.charAt(0).toUpperCase() + product.Category.slice(1);
+    document.querySelector("#p-brand").textContent = product.Brand.Name;
+    document.querySelector("#p-name").textContent = product.NameWithoutBrand;
+
+    const productImage = document.querySelector("#p-image");
+    productImage.src = product.Images.PrimaryExtraLarge;
+    productImage.alt = product.NameWithoutBrand;
+
+    const euroPrice = new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR'
+    }).format(Number(product.FinalPrice) * 0.85);
+    document.querySelector("#p-price").textContent = `${euroPrice}`;
+
+    document.querySelector("#p-color").textContent = product.Colors[0].ColorName;
+    document.querySelector("#p-description").innerHTML = product.DescriptionHtmlSimple;
+
+    // define o data-id do botão
+    document.querySelector("#add-to-cart").dataset.id = product.Id;
   }
 }
