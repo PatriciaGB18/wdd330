@@ -27,11 +27,11 @@ export default class ProductData {
     return data.Result;
   }
 
-  // novo método: busca por termo
+
   async searchProducts(term) {
-    const response = await fetch(`${baseURL}products/search/${term}`);
+    // Use uma rota diferente para a busca, como com um parâmetro de query (?q= ou ?term=)
+    const response = await fetch(`${baseURL}products/search?term=${encodeURIComponent(term)}`);
     const data = await convertToJson(response);
     return data.Result;
   }
-
 }

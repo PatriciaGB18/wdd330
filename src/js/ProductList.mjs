@@ -2,6 +2,7 @@
 import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
+  // O template do produto permanece o mesmo
   return `
     <li class="product-card">
       <a href="/product_pages/index.html?product=${product.Id}">
@@ -15,15 +16,24 @@ function productCardTemplate(product) {
 }
 
 export default class ProductList {
-  constructor(category, dataSource, listElement) {
-    this.category = category;
+  // Adicione um parâmetro opcional 'isSearch' ao construtor
+  constructor(categoryOrTerm, dataSource, listElement, isSearch = false) {
+    this.categoryOrTerm = categoryOrTerm;
     this.dataSource = dataSource;
     this.listElement = listElement;
+    this.isSearch = isSearch;
   }
 
   async init() {
     try {
-      const list = await this.dataSource.getData(this.category);
+      let list;
+
+      // Use o método correto com base no tipo de busca
+      if (this.isSearch) {
+        list = await this.dataSource.searchProducts(this.categoryOrTerm);
+      } else {
+        list = await this.dataSource.getData(this.categoryOrTerm);
+      }
 
       if (!list || list.length === 0) {
         this.listElement.innerHTML = "<p>No products found.</p>";
@@ -33,11 +43,15 @@ export default class ProductList {
       // Renderiza os produtos
       renderListWithTemplate(productCardTemplate, this.listElement, list);
 
-      // Atualiza o título da categoria, se existir
+      // Atualiza o título
       const titleElement = document.querySelector(".title");
       if (titleElement) {
-        const formattedCategory = this.category.replace("-", " ");
-        titleElement.textContent = formattedCategory;
+        if (this.isSearch) {
+          titleElement.textContent = `Search results for "${this.categoryOrTerm}"`;
+        } else {
+          const formattedCategory = this.categoryOrTerm.replace("-", " ");
+          titleElement.textContent = formattedCategory;
+        }
       }
 
     } catch (error) {
